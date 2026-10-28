@@ -6,7 +6,7 @@ import { createSection, uid } from "./demo/demoDocument";
 interface History { past: PageDocument[]; present: PageDocument; future: PageDocument[] }
 
 type Action =
-  | { type: "commit"; doc: PageDocument; coalesce?: string }
+  | { type: "commit"; doc: PageDocument; coalesce?: string | undefined }
   | { type: "undo" }
   | { type: "redo" }
   | { type: "reset"; doc: PageDocument };
@@ -28,12 +28,12 @@ function reducer(h: History, a: Action): History {
     case "undo": {
       if (!h.past.length) return h;
       lastCoalesce = null;
-      return { past: h.past.slice(0, -1), present: h.past[h.past.length - 1], future: [h.present, ...h.future] };
+      return { past: h.past.slice(0, -1), present: h.past[h.past.length - 1]!, future: [h.present, ...h.future] };
     }
     case "redo": {
       if (!h.future.length) return h;
       lastCoalesce = null;
-      return { past: [...h.past, h.present], present: h.future[0], future: h.future.slice(1) };
+      return { past: [...h.past, h.present], present: h.future[0]!, future: h.future.slice(1) };
     }
     case "reset":
       return { past: [], present: a.doc, future: [] };
@@ -57,7 +57,7 @@ export function useEditorStore(initial: PageDocument) {
     move: (from: number, to: number) => {
       const arr = [...doc.sections];
       const [m] = arr.splice(from, 1);
-      arr.splice(to, 0, m);
+      arr.splice(to, 0, m!);
       commit({ ...doc, sections: arr });
     },
     add: (type: SectionType, afterId?: string) => {
@@ -70,7 +70,7 @@ export function useEditorStore(initial: PageDocument) {
     },
     duplicate: (id: string) => {
       const idx = doc.sections.findIndex((s) => s.id === id);
-      const copy = structuredClone(doc.sections[idx]);
+      const copy = structuredClone(doc.sections[idx]!);
       copy.id = uid();
       copy.name = `${copy.name} copy`;
       const arr = [...doc.sections];

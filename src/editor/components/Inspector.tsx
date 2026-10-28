@@ -69,7 +69,7 @@ function SectionInspector({ s, onUpdate }: { s: Section; onUpdate: Update }) {
   const txt = (field: string, label: string, area = false, rows?: number) => {
     const st = s.settings as unknown as Record<string, string>;
     const on = (v: string) => set((o) => ({ ...o, [field]: v }), `${s.id}.${field}`);
-    return <Field label={label}>{area ? <TextArea value={st[field]} onChange={on} rows={rows} /> : <TextInput value={st[field]} onChange={on} />}</Field>;
+    return <Field label={label}>{area ? <TextArea value={st[field] ?? ""} onChange={on} rows={rows} /> : <TextInput value={st[field] ?? ""} onChange={on} />}</Field>;
   };
 
   return (

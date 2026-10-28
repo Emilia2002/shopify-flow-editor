@@ -41,7 +41,7 @@ function toneStyle(style: SectionStyle): CSSProperties {
   return base;
 }
 
-function SectionFrame({ section, selected, onSelect, children }: { section: Section; selected: boolean; onSelect?: (id: string) => void; children: ReactNode }) {
+function SectionFrame({ section, selected, onSelect, children }: { section: Section; selected: boolean; onSelect?: ((id: string) => void) | undefined; children: ReactNode }) {
   return (
     <section
       data-section-id={section.id}

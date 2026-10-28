@@ -72,7 +72,7 @@ export function Editor() {
         productTitle={doc.product.title}
         canUndo={store.canUndo} canRedo={store.canRedo} onUndo={store.undo} onRedo={store.redo}
         device={device} onDevice={setDevice} save={save} onSave={doSave}
-        onReset={() => { clearLocalDraft(); store.reset(demoDocument); savedDoc.current = demoDocument; setSave({ kind: "saved", at: null }); setSelectedId(demoDocument.sections[1].id); }}
+        onReset={() => { clearLocalDraft(); store.reset(demoDocument); savedDoc.current = demoDocument; setSave({ kind: "saved", at: null }); setSelectedId(demoDocument.sections[1]?.id ?? null); }}
         onGenerate={notConnected(generateWithAI)} onExport={notConnected(exportToShopify)}
       />
       <div className="flex min-h-0 flex-1">

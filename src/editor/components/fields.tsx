@@ -56,7 +56,7 @@ export function ColorInput({ value, onChange }: { value: string; onChange: (v: s
 }
 
 /** Image picker: demo library + local upload (kept in-memory as a data URL; not uploaded anywhere). */
-export function ImagePicker({ value, onChange, onRemove }: { value: string; onChange: (v: string) => void; onRemove?: () => void }) {
+export function ImagePicker({ value, onChange, onRemove }: { value: string; onChange: (v: string) => void; onRemove?: (() => void) | undefined }) {
   const ref = useRef<HTMLInputElement>(null);
   return (
     <div className="space-y-2">
